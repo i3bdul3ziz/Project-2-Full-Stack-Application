@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="mr-auto col-8">
+      <form method="POST" action="/auth/signup">
+        <div>
+          <label>Name</label>
+          <input name="name" type="text" />
+        </div>
+        <div>
+          <label>Phone Number</label>
+          <input name="phoneNumber" type="text" />
+        </div>
+        <div>
+          <label>Address</label>
+          <input name="address.city" type="text" />
+          <input name="address.street" type="text" />
+        </div>
+        <div>
+          <label>Password</label>
+          <input name="password" type="password" />
+        </div>
+        User Type: 
+        <input type="radio" name="userType" value="isBuyer"/> Buyer
+        <input type="radio" name="userType" value="isSeller"/> Seller
+       <br />
+        <div>
+          <button class="btn btn-auth" type="submit">Sign Up</button>
+        </div>
+      </form>
+    </div>
+  </div>
