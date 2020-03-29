@@ -10,7 +10,7 @@ let passport = require("./helper/ppConfig");
 
 const app = express()
 
-mongoose.connect(process.env.mongoDB, {
+mongoose.connect(process.env.MONGODB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,

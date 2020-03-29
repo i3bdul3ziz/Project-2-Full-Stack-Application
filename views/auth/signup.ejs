@@ -1,30 +1,47 @@
-<div class="container">
-    <div class="mr-auto col-8">
+
+<section class="container">
+        <div class="section-title">
+            <h2 data-aos="fade-in"> sign up </h2>
+          </div>
       <form method="POST" action="/auth/signup">
-        <div>
-          <label>Name</label>
-          <input name="name" type="text" />
+        <div class="row mb-3">
+            <div class="col-12">
+              <label>Name</label>
+              <input name="name" class="form-input" placeholder="full name" />
+            </div>
+          </div>
+        <div class="row mb-3">
+            <div class="col-12">
+              <label>Phone Number</label>
+              <input name="phoneNumber" class="form-input" placeholder="+966"/>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-6">
+              <input name="address.city" class="form-input" placeholder="City" />
+            </div>
+            <div class="col-6">
+              <input name="address.street" class="form-input" placeholder="Street" />
+            </div>
+          </div>
+        <div class="row mb-3">
+            <div class="col-12">
+              <label>Password</label>
+              <input name="password" class="form-input" placeholder="*******" />
+            </div>
+          </div>
+       <div class="row mb-3">
+          <div class="col-6">
+            Buyer
+            <input name="userType" type="radio" class="form-input" value="isBuyer" />
+          </div>
+          <div class="col-6">
+            Seller
+            <input name="userType" type="radio" class="form-input" value="isSeller" />
+          </div>
         </div>
         <div>
-          <label>Phone Number</label>
-          <input name="phoneNumber" type="text" />
-        </div>
-        <div>
-          <label>Address</label>
-          <input name="address.city" type="text" />
-          <input name="address.street" type="text" />
-        </div>
-        <div>
-          <label>Password</label>
-          <input name="password" type="password" />
-        </div>
-        User Type: 
-        <input type="radio" name="userType" value="isBuyer"/> Buyer
-        <input type="radio" name="userType" value="isSeller"/> Seller
-       <br />
-        <div>
-          <button class="btn btn-auth" type="submit">Sign Up</button>
+          <button class="btn-get-started" type="submit">Sign Up</button>
         </div>
       </form>
-    </div>
-  </div>
+  </section>
