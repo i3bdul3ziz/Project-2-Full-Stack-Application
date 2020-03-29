@@ -2,6 +2,7 @@ const router = require('express').Router()
 const User = require('../models/user.model')
 const passport = require("../helper/ppConfig");
 const isLoggedIn = require('../helper/isLoggedin')
+const bcrypt = require('bcrypt')
 // const { check, validationResult } = require('express-validator')
 
 
@@ -60,15 +61,15 @@ router.get('/auth/changepass', (req, res) => {
 })
 
 router.post('/auth/changepass', isLoggedIn, (req, res) => {
-    // req.user._id
-    User.findByIdAndUpdate(req.user._id, {$set: {password: req.body.password}}).then(() => {
-        res.redirect('/auth/signin')
+    let hash = bcrypt.hashSync(req.body.password, 10);
+    User.findByIdAndUpdate(req.user._id, {$set: {password: hash}}).then(() => {
+        res.redirect('/auth/logout')
     })
 })
 
 router.get('/auth/logout', isLoggedIn, (req, res) => {
     req.logout()
-    req.redirect('/auth/signin')
+    res.redirect('/auth/signin')
 })
 
 module.exports = router
