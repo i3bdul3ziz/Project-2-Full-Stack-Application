@@ -1,0 +1,37 @@
+<section class="container">
+        <div class="section-title">
+            <h2 data-aos="fade-in"> Create Item </h2>
+        </div>
+        <form method="POST" action="/create" enctype="multipart/form-data">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <label>Name </label>
+                    <input class="form-input" name="name" />
+                </div>
+            </div>
+    
+            <div class="row mb-3">
+                <div class="col-12">
+                    <label>Description </label>
+                    <input class="form-input" name="descrption" />
+                </div>
+            </div>
+    
+            <div class="row mb-3">
+                <div class="col-12">
+                    <label> Image</label>
+                    <input class="form-input" type="file" name="image" />
+                </div>
+            </div>
+    
+            <div class="row mb-3">
+                <div class="col-12">
+                    <label> Price </label>
+                    <input class="form-input" name="price"  />
+                </div>
+            </div>
+    
+            <button class="btn-get-started" type="submit">Create Item</button>
+        </form>
+    
+    </section>

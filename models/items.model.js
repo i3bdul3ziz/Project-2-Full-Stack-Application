@@ -5,18 +5,15 @@ const itemsSchema = mongoose.Schema(
     {
         name: {
             type:String,
-            required: true,
         },
         descrption:{
             type: String,
-            required: true,
         },
         image:{
             type: String,
         },
         price: {
             type: Number,
-            required: true,
         },
         user: [{ 
             type: mongoose.Schema.Types.ObjectId,
