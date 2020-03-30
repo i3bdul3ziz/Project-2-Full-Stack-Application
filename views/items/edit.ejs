@@ -1,37 +1,37 @@
 <section class="container">
         <div class="section-title">
-            <h2 data-aos="fade-in"> Create Item </h2>
+            <h2 data-aos="fade-in"> Edit Item </h2>
         </div>
-        <form method="POST" action="/items/create" enctype="multipart/form-data">
+        <form method="POST" action="/items/<%=items.id%>?_method=PUT">
             <div class="row mb-3">
                 <div class="col-12">
                     <label>Name </label>
-                    <input class="form-input" name="name" />
+                    <input class="form-input" name="name" value="<%=item.name%>" />
                 </div>
             </div>
     
             <div class="row mb-3">
                 <div class="col-12">
                     <label>Description </label>
-                    <input class="form-input" name="description" />
+                    <input class="form-input" name="description" value="<%=item.description%>" />
                 </div>
             </div>
     
             <div class="row mb-3">
                 <div class="col-12">
                     <label> Image</label>
-                    <input class="form-input" type="file" name="image" />
+                    <input class="form-input" type="file" name="image" value="<%=item.image%>" />
                 </div>
             </div>
     
             <div class="row mb-3">
                 <div class="col-12">
                     <label> Price </label>
-                    <input class="form-input" name="price"  />
+                    <input class="form-input" name="price" value="<%=item.price%>" />
                 </div>
             </div>
     
-            <button class="btn-get-started" type="submit">Create Item</button>
+            <button class="btn-get-started" type="submit">Edit Item</button>
         </form>
     
     </section>
