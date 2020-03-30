@@ -2,18 +2,31 @@ const router = require('express').Router()
 const User = require('../models/user.model')
 const Item = require('../models/items.model')
 const isLoggedIn = require('../helper/isLoggedin')
-const formidable = require('formidable')
-let fs = require('fs')
 const methodOverride = require('method-override')
 // const { check, validationResult } = require('express-validator')
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
+var storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, "public/images");
+  },
+  filename: function(req, file, cb) {
+    let fileExtension = path.extname(file.originalname).split(".")[1];
+    cb(null, file.fieldname + "-" + Date.now() + "." + fileExtension);
+  }
+});
+var upload = multer({ storage: storage });
 
 router.use(methodOverride("_method"))
 
-// router.get('/index', isLoggedIn, (req, res) => {
-//     User.find(req.user._id, (item) => {
-//         res.render('/item/index', {item})
-//     })
-// })
+router.get('/index', isLoggedIn, (req, res) => {
+    User.find(req.user._id, (err, user) => {
+        Item.find({}, (err, item) => {
+            res.render('items/index', {item , user: req.user})
+        })
+    })
+})
 
 router.get("/create", isLoggedIn, (req, res) => {
       if (req.user.userType === "isSeller") {
@@ -29,19 +42,17 @@ router.get("/create", isLoggedIn, (req, res) => {
       }
 })
 
-router.post('/create', isLoggedIn, (req, res) => {
-    console.log(req.body)
-    var form = new formidable.IncomingForm();
-  form.parse(req, function (err, fields, files) {
-    var oldpath = files.image.path
-    var imagPath = '/images/' + files.image.name; //display image in our index.ejs file
-    var uploadpath = './public/images/' + files.image.name;
-    fs.rename(oldpath, uploadpath, function (err) {
-      if (err) throw err;
-      else {
-        fields.image = imagPath;
+router.post('/create', [isLoggedIn, upload.single("image")], (req, res) => {
+    const file = req.file;
+    if (!file) {
+      const error = new Error("Please upload a file");
+      error.httpStatusCode = 400;
+      return next(error);
+    }
+    // all other code here
         if (req.user.userType === "isSeller") {
             let item = new Item(req.body)
+            item.image = "/images/" + file.filename;
             item
                 .save()
                 .then(() => {
@@ -51,7 +62,7 @@ router.post('/create', isLoggedIn, (req, res) => {
                     })
                     item.user.push(req.user)
                     item.save()
-                    res.redirect('/home')
+                    res.redirect('/index')
                 })
                 .catch( err => {
                     console.log(err)
@@ -59,10 +70,7 @@ router.post('/create', isLoggedIn, (req, res) => {
                 })
         } else {
             res.redirect('/home')
-        }
-      }
-    })
-  })
+    }
 })
 
 
