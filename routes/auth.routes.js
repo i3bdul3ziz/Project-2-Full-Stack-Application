@@ -52,7 +52,7 @@ router.post(
 router.get("/home", (req, res) => {
     // User.find().then(users => {
     //   res.render("home", {users})
-    res.send('Home Page')
+    res.render('home')
     // })
 })
 
@@ -70,10 +70,6 @@ router.post('/auth/changepass', isLoggedIn, (req, res) => {
 router.get('/auth/logout', isLoggedIn, (req, res) => {
     req.logout()
     res.redirect('/auth/signin')
-})
-
-router.get('/items/create', (req, res) => {
-    res.render('items/create' )
 })
 
 module.exports = router
