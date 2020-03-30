@@ -72,6 +72,16 @@ router.post('/create', [isLoggedIn, upload.single("image")], (req, res) => {
             res.redirect('/home')
     }
 })
+router.delete("/index/:id/delete", (req, res) => {
+  //   console.log(request.items.id);
+  //   items.find({_id: request.params.id })
+  Item.findByIdAndDelete(req.params.id).then(() => {
+  //.then(items => {
+    //{items: items} || {items}
+    res.redirect("/");
+  });
+})
+
 
 
 module.exports = router

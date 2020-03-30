@@ -14,7 +14,9 @@
                             <p class="card-text"><%= item.price %></p>
                               <div class="row">
                                 <a href="#" class="btn btn-primary">Edit</a>
-                                <a href="#" class="btn btn-primary">Delete</a>
+                                <form action="/index/<%=item._id %>/delete?_method=DELETE" method="POST">
+                                <button type="submit" class="btn btn-primary">Delete</button>
+                            </form>
                               </div>
                             </div>
                     </div>
