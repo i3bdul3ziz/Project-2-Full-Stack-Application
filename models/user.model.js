@@ -20,12 +20,10 @@ const userSchema = mongoose.Schema(
             type: String,
             required: true,
         },
-        // isBuyer:{
-        //     type:Boolean
-        // },
-        // isSeller:{
-        //     type:Boolean
-        // }
+        items:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Item"
+        }],
         userType: { 
             type: String,
             enum: ['isBuyer', 'isSeller']
