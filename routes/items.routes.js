@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const moment = require("moment");
 const User = require('../models/user.model')
 const Item = require('../models/items.model')
 const isLoggedIn = require('../helper/isLoggedin')
@@ -20,14 +21,16 @@ var upload = multer({ storage: storage });
 
 router.use(methodOverride("_method"))
 
+// Item home page (index) route
 router.get('/index', isLoggedIn, (req, res) => {
     User.find(req.user._id, (err, user) => {
         Item.find({}, (err, item) => {
-            res.render('items/index', {item , user: req.user})
+            res.render('items/index', {item , user: req.user, moment})
         })
     })
 })
 
+//Create items route
 router.get("/create", isLoggedIn, (req, res) => {
       if (req.user.userType === "isSeller") {
         User.find().populate('user')
@@ -73,5 +76,27 @@ router.post('/create', [isLoggedIn, upload.single("image")], (req, res) => {
     }
 })
 
+//Create an edit route
+router.get("/index/:id/edit", (req, res) => {
+    Item.findById(req.params.id, (err, items) => {
+      //find the items
+      res.render("items/edit", {
+        items: items //pass in found items
+      });
+    });
+  });
+ 
+//Create an PUT route
+
+// Delete route
+router.delete("/index/:id/delete", (req, res) => {
+    //   console.log(request.items.id);
+    //   items.find({_id: request.params.id })
+    Item.findByIdAndDelete(req.params.id).then(() => {
+    //.then(items => {
+      //{items: items} || {items}
+      res.redirect("/index");
+    });
+  })
 
 module.exports = router
