@@ -72,8 +72,8 @@ router.get('/auth/logout', isLoggedIn, (req, res) => {
     res.redirect('/auth/signin')
 })
 
-router.get('/views/home', (req, res) => {
-    res.render('home', )
+router.get('/items/create', (req, res) => {
+    res.render('items/create' )
 })
 
 module.exports = router
