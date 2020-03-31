@@ -23,10 +23,19 @@ router.use(methodOverride("_method"))
 
 // Item home page (index) route
 router.get('/index', isLoggedIn, (req, res) => {
-    User.find(req.user._id, (err, user) => {
-        Item.find({}, (err, item) => {
-            res.render('items/index', {item , user: req.user, moment})
-        })
+    // User.find(req.user._id, (err, user) => {
+    //     Item.find({}, (err, item) => {
+    //         res.render('items/index', {item , user: req.user, moment})
+    //     })
+    // })
+    User.find(req.user._id).populate('items')
+    .then(user => {
+        console.log(user.items[0].name)
+        res.render('items/index', {user})
+        
+    })
+    .catch(err => {
+        console.log(err)
     })
 })
 
