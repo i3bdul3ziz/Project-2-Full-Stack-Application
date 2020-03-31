@@ -76,19 +76,26 @@ router.post('/create', [isLoggedIn, upload.single("image")], (req, res) => {
     }
 })
 
-
-
 //Create an edit route
-router.get("/index/:id/edit", (req, res) => {
-    Item.findById(req.params.id, (err, items) => {
-      //find the items
-      res.render("items/edit", {
-        items: items //pass in found items
-      });
+router.get("/items/:id/edit", (req, res) => {
+  Item.findById(req.params.id, (err, item) => {
+    //find the items
+    res.render("items/edit", {
+      item: item //pass in found items
     });
   });
- 
+});
+
 //Create an PUT route
+router.put("/items/:id/edit", (req, res) => {
+  // //   console.log(request.items.id);
+  Item.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, updatedModel) => {
+    res.redirect('/index')
+})
+ });
+
+
+
 
 // Delete route
 router.delete("/index/:id/delete", (req, res) => {
@@ -100,5 +107,6 @@ router.delete("/index/:id/delete", (req, res) => {
       res.redirect("/index");
     });
   })
+
 
 module.exports = router
