@@ -384,6 +384,12 @@ section {
     text-decoration: none;
     border: 1px solid #fdc134;
   }
+  .get-edit-btn a:hover {
+    background: transparent;
+    color: #213b52;
+    text-decoration: none;
+    border: 1px solid #fdc134;
+  } 
 .get-delete-btn {
     background: #213b52;
     color: #fff;
