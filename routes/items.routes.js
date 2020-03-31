@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const moment = require("moment");
 const User = require('../models/user.model')
 const Item = require('../models/items.model')
 const isLoggedIn = require('../helper/isLoggedin')
@@ -20,14 +21,16 @@ var upload = multer({ storage: storage });
 
 router.use(methodOverride("_method"))
 
+// Item home page (index) route
 router.get('/index', isLoggedIn, (req, res) => {
     User.find(req.user._id, (err, user) => {
         Item.find({}, (err, item) => {
-            res.render('items/index', {item , user: req.user})
+            res.render('items/index', {item , user: req.user, moment})
         })
     })
 })
 
+//Create items route
 router.get("/create", isLoggedIn, (req, res) => {
       if (req.user.userType === "isSeller") {
         User.find().populate('user')
@@ -72,15 +75,8 @@ router.post('/create', [isLoggedIn, upload.single("image")], (req, res) => {
             res.redirect('/home')
     }
 })
-router.delete("/index/:id/delete", (req, res) => {
-  //   console.log(request.items.id);
-  //   items.find({_id: request.params.id })
-  Item.findByIdAndDelete(req.params.id).then(() => {
-  //.then(items => {
-    //{items: items} || {items}
-    res.redirect("/");
-  });
-})
+
+//Create an edit route
 router.get("/items/:id/edit", (req, res) => {
   Item.findById(req.params.id, (err, item) => {
     //find the items
@@ -90,11 +86,27 @@ router.get("/items/:id/edit", (req, res) => {
   });
 });
 
+//Create an PUT route
 router.put("/items/:id/edit", (req, res) => {
   // //   console.log(request.items.id);
   Item.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, updatedModel) => {
     res.redirect('/index')
 })
-
  });
+
+
+
+
+// Delete route
+router.delete("/index/:id/delete", (req, res) => {
+    //   console.log(request.items.id);
+    //   items.find({_id: request.params.id })
+    Item.findByIdAndDelete(req.params.id).then(() => {
+    //.then(items => {
+      //{items: items} || {items}
+      res.redirect("/index");
+    });
+  })
+
+
 module.exports = router
