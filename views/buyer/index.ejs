@@ -9,7 +9,7 @@
         <div class="row mb-3">
             <% item.forEach(item => { %>
                 <div class="col-4">
-                    <div class="card" style="width: 18rem; margin-bottom:50px;">
+                    <div class="card" style="margin-bottom:50px;">
                             <img src="<%= item.image %>" class="card-img-top" alt="item image">
                             <div class="card-body">
                             <h5 class="card-title">Item name: <%= item.name %></h5>
@@ -17,6 +17,7 @@
                             <p class="card-text">Price: <%= item.price %></p>
                             <p class="card-text"><%= moment(item.createdAt).fromNow() %></p>
                             </div>
+                            <button type="submit"  class="get-edit-btn"><a href="/buyer/<%=item.id%>/show"> Show Details</a> </button>
                     </div>
                 </div> 
             <% }) %>
