@@ -87,9 +87,16 @@ router.get("/items/:id/edit", (req, res) => {
 });
 
 //Create an PUT route
-router.put("/items/:id/edit", (req, res) => {
+router.put("/items/:id/edit", [isLoggedIn, upload.single("image")], (req, res) => {
   // //   console.log(request.items.id);
-  Item.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, updatedModel) => {
+  const file = req.file;
+  if (!file) {
+    const error = new Error("Please upload a file");
+    error.httpStatusCode = 400;
+    return next(error);
+  }
+  Item.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, item) => {
+    item.image = "/images/" + file.filename;
     res.redirect('/index')
 })
  });
