@@ -4,8 +4,8 @@
         <div class="container">
           <div class="row d-flex align-items-center">
           <div class=" col-lg-6 py-5 py-lg-0 order-2 order-lg-1" data-aos="fade-right">
-            <h1>Your new digital experience with Shopper</h1>
-            <h2>We are team of talanted designers making websites with Bootstrap</h2>
+            <h1>Your new Shop experience with Shopper.</h1>
+            <h2>Brings together all antique dealers and customers onto a single online marketplace. </h2>
           </div>
           <div class="col-lg-6 order-1 order-lg-2 intro-img" data-aos="fade-left">
             <img src="../images/intro-img.png" class="img-fluid" alt="">
@@ -18,10 +18,26 @@
     <section id="shopNow" class="shopNow section-bg">
             <div class="container">
               <div class="section-title">
-                <h2 data-aos="fade-in"> Shop Now </h2>
-                <p data-aos="fade-in">Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+                <h2 data-aos="fade-in"> Antiques added in the last 48 hours </h2>
+                <p data-aos="fade-in">Enjoy the experience of buying your favourite antique among these precious pieces .. </p>
               </div>
               
             </div>
     </section><!-- End Shop now Section -->
-      
+    <section class="container">
+      <div class="row mb-3">
+          <% item.forEach(item => { %>
+              <div class="col-4">
+                  <div class="card" style="margin-bottom:50px;">
+                          <img src="<%= item.image %>" class="card-img-top" alt="item image">
+                          <div class="card-body">
+                          <h5 class="card-title">Item name: <%= item.name %></h5>
+                          <p class="card-text">Description: <%= item.descrption %></p>
+                          <p class="card-text">Price: <%= item.price %> SAR</p>
+                          <p class="card-text"><%= moment(item.createdAt).fromNow() %></p>
+                          </div>
+                  </div>
+              </div> 
+          <% }) %>
+      </div>
+  </section>

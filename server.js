@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const expressLayouts = require('express-ejs-layouts')
 const authRoutes = require('./routes/auth.routes')
 const itemRoutes = require('./routes/items.routes')
+const buyerRoutes = require('./routes/buyer.routes')
 const session = require("express-session");
 // const flash = require('connect-flash')
 let passport = require("./helper/ppConfig");
@@ -47,6 +48,11 @@ app.use(function(req, res, next) {
 
 app.use(authRoutes)
 app.use(itemRoutes)
+app.use(buyerRoutes)
+
+app.get("/home", (req, res) => {
+    res.render('home')
+})
 
 app.get('*', (req, res) => {
     res.send('does not found')

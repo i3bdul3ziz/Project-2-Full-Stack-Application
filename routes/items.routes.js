@@ -23,11 +23,19 @@ router.use(methodOverride("_method"))
 
 // Item home page (index) route
 router.get('/index', isLoggedIn, (req, res) => {
-    User.find(req.user._id, (err, user) => {
-        Item.find({}, (err, item) => {
-            res.render('items/index', {item , user: req.user, moment})
-        })
+  if(req.user.userType === "isSeller"){
+    User.findById(req.user._id).populate('items')
+    .then(user => {
+      let items = user.items
+        res.render('items/index', {user, items, moment})
+        
     })
+    .catch(err => {
+        console.log(err)
+    })
+  } else {
+    res.redirect('/home')
+  }
 })
 
 //Create items route
@@ -77,36 +85,47 @@ router.post('/create', [isLoggedIn, upload.single("image")], (req, res) => {
 })
 
 //Create an edit route
-router.get("/items/:id/edit", (req, res) => {
-  Item.findById(req.params.id, (err, item) => {
-    //find the items
-    res.render("items/edit", {
-      item: item //pass in found items
+router.get("/items/:id/edit", isLoggedIn,(req, res) => {
+  if(req.user.userType == "isSeller"){
+    Item.findById(req.params.id, (err, item) => {
+      //find the items
+      res.render("items/edit", {
+        item: item //pass in found items
+      });
     });
-  });
+  }else {
+    res.redirect('/home')
+  }
 });
 
 //Create an PUT route
-router.put("/items/:id/edit", (req, res) => {
+router.put("/items/:id/edit", [isLoggedIn, upload.single("image")], (req, res) => {
   // //   console.log(request.items.id);
-  Item.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, updatedModel) => {
-    res.redirect('/index')
-})
- });
-
-
-
+  const file = req.file;
+  if (!file) {
+    const error = new Error("Please upload a file");
+    error.httpStatusCode = 400;
+    return next(error);
+  }
+  if(req.user.userType == "isSeller"){
+    Item.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, item) => {
+      console.log(item.image)
+      res.redirect('/index')
+    }) 
+  } else {
+    res.redirect('/home')
+  }
+});
 
 // Delete route
-router.delete("/index/:id/delete", (req, res) => {
-    //   console.log(request.items.id);
-    //   items.find({_id: request.params.id })
+router.delete("/index/:id/delete", isLoggedIn,(req, res) => {
+  if(req.user.userType == "isSeller"){
     Item.findByIdAndDelete(req.params.id).then(() => {
-    //.then(items => {
-      //{items: items} || {items}
       res.redirect("/index");
     });
-  })
-
+  } else {
+    res.redirect('/home')
+  }
+})
 
 module.exports = router

@@ -1,6 +1,7 @@
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
+
 #header {
     height: 80px;
     transition: all 0.5s;
@@ -262,7 +263,10 @@ section {
     text-align: left;
     padding-bottom: 30px;
   }
-  
+  .section-des{
+      padding: 15px 0;
+
+  }
   .section-title .section-title2 h2 {
     font-size: 32px;
     font-weight: 600;
@@ -274,7 +278,7 @@ section {
     color: #213b52;
   }
   
-  .section-title h2::before {
+  /*.section-title h2::before {
     content: '';
     position: absolute;
     display: block;
@@ -285,7 +289,7 @@ section {
     left: calc(50% - 60px);
   }
   
-  .section-title h2::after {
+   .section-title h2::after {
     content: '';
     position: absolute;
     display: block;
@@ -294,7 +298,7 @@ section {
     background: #fdc134;
     bottom: 0;
     left: calc(50% - 20px);
-  }
+  } */
   
   .section-title p {
     margin-bottom: 0;
@@ -378,18 +382,17 @@ section {
     font-family: "Raleway", sans-serif;
     transition: 0.3s;
 }
+.get-edit-btn a{
+    text-decoration: none;
+    color: #213b52;
+   }
 .get-edit-btn:hover {
     background: transparent;
     color: #213b52;
     text-decoration: none;
     border: 1px solid #fdc134;
   }
-  .get-edit-btn a:hover {
-    background: transparent;
-    color: #213b52;
-    text-decoration: none;
-    border: 1px solid #fdc134;
-  } 
+  
 .get-delete-btn {
     background: #213b52;
     color: #fff;
@@ -398,6 +401,73 @@ section {
     padding: 4px 25px 6px 25px;
     border: 2px solid #fdc134;
 }
+/*--------------------------------------------------------------
+# buyer page
+--------------------------------------------------------------*/
+.get-show-btn {
+    background: #fdc134;
+    display: inline-block;
+    padding: 8px 30px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Raleway", sans-serif;
+    transition: 0.3s;
+    margin: 0 auto;
+}
+.get-show-btn a{
+    text-decoration: none;
+    color: #213b52;
+   }
+.get-show-btn:hover {
+    background: transparent;
+    color: #213b52;
+    text-decoration: none;
+    border: 1px solid #fdc134;
+  } 
+  /* show page */
+  .get-buy-btn {
+    background: #fdc134;
+    display: inline-block;
+    padding: 8px 30px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "Raleway", sans-serif;
+    transition: 0.3s;
+    width: 100%
+} 
+.get-buy-btn:hover {
+    background: transparent;
+    color: #213b52;
+    text-decoration: none;
+    border: 1px solid #fdc134;
+  } 
+  .get-comment-btn{
+    background: transparent;
+    color: #213b52;
+    text-decoration: none;
+    border: 1px solid #213b52;
+    float: right;
+    border-radius: 20px;
+    margin: 10px 0;
+    padding: 8px 30px;
+  }
+  .comments h2{
+      padding: 15px 0;
+  }
+.comments li{
+    list-style: none;
+ } 
+ 
+ .comments i{
+    font-size: 20px;
+    padding-right: 4px;
+    color: #213b52;
+ } 
+ .card-text{
+    font-weight: 600;
+ }
 
 /*--------------------------------------------------------------
 # Footer
