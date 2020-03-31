@@ -24,11 +24,15 @@ const userSchema = mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "Item"
         }],
+        comments:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Item"
+        }],
         userType: { 
             type: String,
             enum: ['isBuyer', 'isSeller']
         }
-    }, {timestamp: true}
+    }, {timestamps: true}
 )
 
 userSchema.pre("save", function(next) {

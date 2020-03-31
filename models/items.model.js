@@ -15,11 +15,15 @@ const itemsSchema = mongoose.Schema(
         price: {
             type: Number,
         },
+        comments: [{ 
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Comment"
+        }],
         user: [{ 
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         }]
-    }, {timestamp: true}
+    }, {timestamps: true}
 )
 
 const Item = mongoose.model('Item', itemsSchema)

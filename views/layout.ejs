@@ -21,9 +21,14 @@
                   <nav class="nav-menu d-none d-lg-block">
                     <ul>
                       <li class="active"><a href="/home">Home</a></li>
-                      <li><a href="/auth/signin">Sign in</a></li>
-                      <!-- <li><a href="/auth/logout">Logout</a></li> -->
-                      <li class="get-started"><a href="/auth/signup">Sign up</a></li>
+                      <% if(currentUser) {%>
+                        <li> <a href="/auth/changepass">Change password</a></li>
+                       <li><a href="/auth/logout">Logout</a></li>
+                      <%} %> 
+                      <% if(!currentUser) {%>
+                     <li><a href="/auth/signin">Sign in</a></li>
+                   <li class="get-started"><a href="/auth/signup">Sign up</a></li>
+                   <%} %>
                     </ul>
                   </nav><!-- .nav-menu -->
                 </div>

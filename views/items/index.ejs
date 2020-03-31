@@ -1,21 +1,31 @@
 <section class="container">
-    <div class="section-title2">
-        <h2 data-aos="fade-in"> Wlecome <%= user.name %></h2>
-    </div>
-    <!-- list of Items created -->
-    <div class="row mb-3">
-        <% user.items.forEach(item => { %>
-            <div class="col-3">
-                <div class="card" style="width: 18rem;">
-                        <img src="<%= item.image %>" class="card-img-top" alt="item image">
-                        <div class="card-body">
-                        <h5 class="card-title"><%= item.name %></h5>
-                        <p class="card-text"><%= item.description %></p>
-                        <p class="card-text"><%= item.price %></p>
-                        <a href="#" class="btn btn-primary">Edit</a>
-                        </div>
-                </div>
-            </div> 
-        <% }) %>
-    </div>
-</section>
+        <div class="col-lg-6 py-5 py-lg-0 order-2 order-lg-1 aos-init aos-animate" data-aos="fade-right">
+                <h2 data-aos="fade-in"> Wlecome, <%= user.name %>  </h2>
+                <h2>We are team of talanted designers making websites with Bootstrap</h2>
+                <a href="/create" class="btn-add-item scrollto">Add Item</a>
+         </div>
+        </section>
+        <!-- list of Items created -->
+        <section class="container">
+        <div class="row mb-3">
+            <% items.forEach(item => { %>
+                <div class="col-4">
+                    <div class="card" style="margin-bottom:50px;">
+                            <img src="<%= item.image %>" class="card-img-top" alt="item image">
+                            <div class="card-body">
+                            <h5 class="card-title">Item name: <%= item.name %></h5>
+                            <p class="card-text">Description: <%= item.descrption %></p>
+                            <p class="card-text">Price: <%= item.price %></p>
+                            <p class="card-text"><%= moment(item.createdAt).fromNow() %></p>
+                              <div class="row">
+                                <button type="submit"  class="get-edit-btn"><a href="/items/<%=item.id%>/edit"> Edit</a> </button>
+                                <form action="/index/<%=item._id %>/delete?_method=DELETE" method="POST">
+                                    <button type="submit" class="get-delete-btn">Delete</button>
+                                </form>
+                              </div>
+                            </div>
+                    </div>
+                </div> 
+            <% }) %>
+        </div>
+    </section>

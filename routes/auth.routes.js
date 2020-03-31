@@ -25,7 +25,7 @@ router.post("/auth/signup", (req, res) => {
         .then(() => {
 
           passport.authenticate("local", {
-            successRedirect: "/home",
+            successRedirect: "/auth/signin",
             // successFlash: 'Account created and you have logged in!'
           })(req, res)
         })
@@ -41,20 +41,15 @@ router.get('/auth/signin', (req, res) => {
 
 router.post(
     "/auth/signin",
-    passport.authenticate("local", {
-      successRedirect: "/index",
+    passport.authenticate("local", 
+    {
+      successRedirect: "/home",
       failureRedirect: "/auth/signin",
     //   failureFlash: 'Invalid Username or Password',
     //   successFlash: 'You have logged in'
-    })
+    }
+    )
 )
-
-router.get("/home", (req, res) => {
-    // User.find().then(users => {
-    //   res.render("home", {users})
-    res.render('home')
-    // })
-})
 
 router.get('/auth/changepass', (req, res) => {
     res.render('auth/changePass')
@@ -69,7 +64,7 @@ router.post('/auth/changepass', isLoggedIn, (req, res) => {
 
 router.get('/auth/logout', isLoggedIn, (req, res) => {
     req.logout()
-    res.redirect('/auth/signin')
+    res.redirect('/home')
 })
 
 module.exports = router
