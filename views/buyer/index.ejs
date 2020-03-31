@@ -17,6 +17,7 @@
                             <p class="card-text">Price: <%= item.price %></p>
                             <p class="card-text"><%= moment(item.createdAt).fromNow() %></p>
                             </div>
+                            <button type="submit"  class="get-edit-btn"><a href="/buyer/index/<%=item.id%>"> Show Details</a> </button>
                     </div>
                 </div> 
             <% }) %>

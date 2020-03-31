@@ -1,0 +1,30 @@
+<section class="container">
+    <div class="row">
+            <div class="col-12">
+                <div class="card" style=" margin-bottom:50px;">
+                        <img src="<%= item.image %>" class="card-img-top" alt="item image">
+                        <div class="card-body">
+                        <h5 class="card-title">Item name: <%= item.name %></h5>
+                        <p class="card-text">Description: <%= item.descrption %></p>
+                        <p class="card-text">Price: <%= item.price %></p>
+                        <p class="card-text"><%= moment(item.createdAt).fromNow() %></p>
+                        <p class="card-text"><%= item.createdAt %></p>
+                        <% item.comments.forEach(comment => { %>
+                            <p class="card-text"><%= comment.comment %></p>
+                        <% }) %>
+                        </div>
+                        <form action="" method="POST">
+                            <button type="submit">Buy</button>
+                        </form>
+                        <br>
+                       <div>
+                        <form action="/buyer/index/<%=item._id%>" method="POST">
+                            <h5 class="card-title">comment:</h5>
+                            <textarea class="form-control" name="comment"></textarea>
+                            <button type="submit">Add Comment</button>
+                        </form>
+                       </div>
+                </div>
+            </div> 
+    </div>
+</section>
