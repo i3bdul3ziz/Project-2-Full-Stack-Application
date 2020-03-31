@@ -81,7 +81,20 @@ router.delete("/index/:id/delete", (req, res) => {
     res.redirect("/");
   });
 })
+router.get("/items/:id/edit", (req, res) => {
+  Item.findById(req.params.id, (err, item) => {
+    //find the items
+    res.render("items/edit", {
+      item: item //pass in found items
+    });
+  });
+});
 
+router.put("/items/:id/edit", (req, res) => {
+  // //   console.log(request.items.id);
+  Item.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, updatedModel) => {
+    res.redirect('/index')
+})
 
-
+ });
 module.exports = router
