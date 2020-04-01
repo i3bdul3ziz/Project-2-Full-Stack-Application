@@ -12,6 +12,8 @@ const flash = require('connect-flash')
 let passport = require("./helper/ppConfig")
 const MongoStore = require('connect-mongo')(session);
 
+
+
 const app = express()
 
 mongoose.connect(process.env.MONGODB, {
@@ -27,6 +29,8 @@ mongoose.connect(process.env.MONGODB, {
 
 app.use(express.static('public'))
 app.use(express.urlencoded({extended: true}))
+ 
+//app.use(flash())
 app.set('view engine', 'ejs')
 app.use(expressLayouts)
 
