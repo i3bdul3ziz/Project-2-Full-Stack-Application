@@ -14,7 +14,7 @@ router.post('/buy', isLoggedIn , (req, res) => {
     console.log("not", not)
    not.save().then (()=> {
     User.findByIdAndUpdate(req.body.seller,{$push:{notification:not._id}}).then(()=>{
-        res.redirect('/buyer/index')
+        res.redirect('/home')
     })
    })
    

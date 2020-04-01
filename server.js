@@ -77,7 +77,7 @@ app.use(notRoutes)
 // })
 
 app.get('*', (req, res) => {
-    res.send('does not found')
+    res.send('404 page does not found !!')
 })
 
 

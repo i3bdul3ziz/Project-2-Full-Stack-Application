@@ -1,84 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
-  <link rel="stylesheet" href="/css/main.css" />
-    <title>Shopper App</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/css/main.css" />
+    <title>Shopper. App</title>
 </head>
+
 <body>
-        <header id="header">
-                <div class="container d-flex">
-                  <div class="logo mr-auto">
-                    <h1 class="text-light">Shopper<span>.</span></h1>
-                  </div>
-                  <nav class="nav-menu d-none d-lg-block">
-                    <ul>
-                      <li class="active"><a href="/home">Home</a></li>
-                      <% if(currentUser) {%>
+    <header id="header">
+        <div class="container d-flex">
+            <div class="logo mr-auto">
+                <h1 class="text-light">Shopper<span>.</span></h1>
+            </div>
+            <nav class="nav-menu d-none d-lg-block">
+                <ul>
+                    <li class="active"><a href="/home">Home</a></li>
+                    <% if(currentUser) {%>
                         <li> <a href="/auth/changepass">Change password</a></li>
-                       <li class="get-started"><a href="/auth/logout">Logout</a></li>
-                      <%} %> 
-                      <% if(!currentUser) {%>
-                     <li><a href="/auth/signin">Sign in</a></li>
-                   <li class="get-started"><a href="/auth/signup">Sign up</a></li>
-                   <%} %>
-                    </ul>
-                  </nav><!-- .nav-menu -->
+                        <li class="get-started"><a href="/auth/logout">Logout</a></li>
+                        <%} %>
+                            <% if(!currentUser) {%>
+                                <li><a href="/auth/signin">Sign in</a></li>
+                                <li class="get-started"><a href="/auth/signup">Sign up</a></li>
+                                <%} %>
+                </ul>
+            </nav>
+            <!-- .nav-menu -->
+        </div>
+    </header>
+    <!-- End Header -->
+    <div class="container">
+        <% if(alerts.success){ %>
+            <% alerts.success.forEach(function(msg){ %>
+                <div class="alert alert-success">
+                    <%= msg %>
                 </div>
-              </header><!-- End Header -->
-              <div class="container">
-                <% if(alerts.success){ %>
-                  <% alerts.success.forEach(function(msg){ %>
-                   <div class="alert alert-success">
-                     <%= msg %>
-                   </div>
-                 <% }); %> 
-               <% } %>
-               
-               <% if(alerts.error){ %> 
-                 <%alerts.error.forEach(function(msg){ %>
-                   <div class="alert alert-danger">
-                     <%= msg %>
-                   </div>
-                 <% }); %>
-               <% } %>
-              </div>
+                <% }); %>
+                    <% } %>
+
+                        <% if(alerts.error){ %>
+                            <%alerts.error.forEach(function(msg){ %>
+                                <div class="alert alert-danger">
+                                    <%= msg %>
+                                </div>
+                                <% }); %>
+                                    <% } %>
+                                        <% if(alerts.autherror){ %>
+                                            <%
+                alerts.autherror.forEach(function(msg){ %>
+                                                <!-- write this error massage this way msg.param to accec the object array  -->
+                                                <div class="alert alert-danger">
+                                                    Your
+                                                    <%= msg.param %> has
+                                                        <%= msg.msg %>
+                                                </div>
+                                                <% }); %>
+                                                    <% } %>
+
+    </div>
     <%- body %>
 
-    <!-- ======= Footer ======= -->
-  <footer id="footer">
-        <div class="footer-top">
-          <div class="container" data-aos="fade-up">
-            <div class="row  justify-content-center">
-              <div class="col-lg-6">
-                <h3>Shopper<span>.</span></h3>
-                <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p>
-              </div>
-            </div>
-    
-            <div class="social-links">
-              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-              <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-            </div>
-    
-          </div>
-        </div>
-    
-        <div class="container footer-bottom clearfix">
-          <div class="copyright">
-            &copy; Copyright <strong><span>Shopper</span></strong>. All Rights Reserved
-          </div>
-        </div>
-      </footer><!-- End Footer -->
+        <!-- ======= Footer ======= -->
+        <footer id="footer">
+            <div class="footer-top">
+                <div class="container" data-aos="fade-up">
+                    <div class="row  justify-content-center">
+                        <div class="col-lg-6">
+                            <h3>Shopper<span>.</span></h3>
+                            <p>Brings together all antique dealers and customers onto a single online marketplace.</p>
+                        </div>
+                    </div>
+
+                    <div class="row social-links">
+                        <div class="col-xl-4 col-lg-4 col-md-6">
+                            <div class="member" data-aos="fade-up">
+                                <h4>Ibtihal Alotaibi</h4>
+                                <span>Full-Stack Developer</span>
+                                <div class="social">
+                                    <a href="https://git.generalassemb.ly/Ibtihal" class="google-plus"><i class="bx bxl-github"></i></a>
+                                    <a href="https://linkedin.com/in/ibtihal-alotaibi" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-4 col-md-6">
+                            <div class="member" data-aos="fade-up" data-aos-delay="100">
+                                <h4>Abdulaziz Althagafi</h4>
+                                <span>Full-Stack Developer</span>
+                                <div class="social">
+                                    <a href="https://git.generalassemb.ly/labdul2ziz" class="google-plus"><i class="bx bxl-github"></i></a>
+                                    <a href="http://linkedin.com/in/abdulaziz-al-thagafi-3a0814189" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-4 col-md-6">
+                            <div class="member" data-aos="fade-up" data-aos-delay="200">
+                                <h4>Adel Hazazi </h4>
+                                <span>Full-Stack Developer</span>
+                                <div class="social">
+                                    <a href="https://git.generalassemb.ly/adelHazazi" class="google-plus"><i class="bx bxl-github"></i></a>
+                                    <a href="https://www.linkedin.com/in/adel-hazazi" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="container footer-bottom clearfix">
+                    <div class="copyright">
+                        &copy; Copyright <strong><span>Shopper</span></strong>. All Rights Reserved
+                    </div>
+                </div>
+        </footer>
+        <!-- End Footer -->
+        <!--  Main JS File -->
+  <script src="/js/main.js"></script>
 </body>
+
 </html>

@@ -22,34 +22,39 @@ var upload = multer({ storage: storage });
 router.use(methodOverride("_method"))
 
 router.get('/home', (req, res) => {
-  if(!req.user){
-      Item.find({}, (err, item) => {
-          res.render('home', {item ,moment})
-      })
-  } else if(req.user.userType == "isBuyer") {
-      res.redirect('/buyer/index')
-  } else {
-      res.redirect('/index')
-  }
-})
-
+    if(!req.user){
+        Item.find({}, (err, item) => {
+            res.render('home', {item ,moment})
+        })
+    } else if(req.user.userType == "isBuyer") {
+        res.redirect('/buyer/index')
+    } else {
+        res.redirect('/index')
+    }
+  })
+  
 // Item home page (index) route
 router.get('/index', isLoggedIn, (req, res) => {
   if(req.user.userType === "isSeller"){
     User.findById(req.user._id)
-//     .populate({path:"notification", model:"Notification", 
-//     populate: {path:'buyer', model:'User'}
-//   })
-  .populate('items')
-    .then(user => { 
-        console.log (user)
-      let items = user.items
-        res.render('items/index', {user, items, moment})
-        
-    })
-    .catch(err => {
-        console.log(err)
-    })
+      .populate({
+        path: "notification",
+        model: "Notification",
+        populate: {
+          path: "buyer",
+          model: "User"
+        }
+      })
+      .populate("items")
+      .then(user => {
+        console.log(user);
+        let items = user.items;
+        let notification = user.notification;
+        res.render("items/index", { user, items, moment, notification});
+      })
+      .catch(err => {
+        console.log(err);
+      });
   } else {
     req.flash('error', "You don't have th permission to access this page!")
     res.redirect('/home')

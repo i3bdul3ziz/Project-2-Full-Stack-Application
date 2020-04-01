@@ -9,7 +9,7 @@
         <section class="container">
         <div class="row mb-3">
             <% items.forEach(item => { %>
-                <div class="col-4">
+                <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="card" style="margin-bottom:50px;">
                             <img src="<%= item.image %>" class="card-img-top" alt="item image">
                             <div class="card-body">
@@ -17,7 +17,14 @@
                             <p class="card-text">Description: <%= item.descrption %></p>
                             <p class="card-text">Price: <%= item.price %> SAR</p>
                             <p class="card-text"><%= moment(item.createdAt).fromNow() %></p>
-                            
+                            <% if(notification.length > 0){ %> <% notification.forEach(not =>{ %>
+                                <% if(not.item.toString() == item._id.toString() && !not.status){%>
+                                <div class="alert alert-info">
+                                  <%= not.buyer.name %> is interested!
+                                 <br> Contact Number: <%= not.buyer.phoneNumber %>
+                                </div>
+                                <%} %> <% }) %> <%} %>
+                           
                               <div class="row">
                                 <button type="submit"  class="get-edit-btn"><a href="/items/<%=item.id%>/edit"> Edit</a> </button>
                                 <form action="/index/<%=item._id %>/delete?_method=DELETE" method="POST">
