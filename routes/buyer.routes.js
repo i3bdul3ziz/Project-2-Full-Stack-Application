@@ -39,6 +39,7 @@ router.get("/buyer/index/:id", isLoggedIn, (req, res) => {
             console.log(err)
         })
     } else {
+        req.flash('error', "You don't have th permission to access this page!")
         res.redirect('/home')
     }
 })
@@ -61,13 +62,15 @@ router.post('/buyer/index/:id', isLoggedIn, (req, res) => {
                 comment.user.push(req.user._id)
                 comment.item.push(req.params.id)
                 comment.save()
+                req.flash('success', "Comment added successfully")
                 res.redirect('/buyer/index/' + req.params.id)
             })
             .catch( err => {
                 console.log(err)
-                res.send('Error!!!!!!')
+                return req.flash('error', "Something went wrong! can't add comment")
             })
     } else {
+        req.flash('error', "You don't have th permission to access this page!")
         res.redirect('/home')
     }
 })
