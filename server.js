@@ -6,9 +6,15 @@ const expressLayouts = require('express-ejs-layouts')
 const authRoutes = require('./routes/auth.routes')
 const itemRoutes = require('./routes/items.routes')
 const buyerRoutes = require('./routes/buyer.routes')
+<<<<<<< HEAD
+const session = require("express-session");
+//const flash = require('connect-flash')
+let passport = require("./helper/ppConfig");
+=======
 const session = require("express-session")
 const flash = require('connect-flash')
 let passport = require("./helper/ppConfig")
+>>>>>>> 6301544111752579231e161c15b378d8652ffbf6
 
 const app = express()
 
@@ -25,6 +31,8 @@ mongoose.connect(process.env.MONGODB, {
 
 app.use(express.static('public'))
 app.use(express.urlencoded({extended: true}))
+ 
+//app.use(flash())
 app.set('view engine', 'ejs')
 app.use(expressLayouts)
 
