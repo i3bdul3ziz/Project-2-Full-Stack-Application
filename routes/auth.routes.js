@@ -41,7 +41,7 @@ router.post("/auth/signup",
         .then(() => {
           passport.authenticate("local", {
             successRedirect: "/auth/signin",
-            // successFlash: 'Account created and you have logged in!'
+            successFlash: 'Account created successfully!'
           })(req, res)
         })
         .catch(err => {
@@ -59,25 +59,28 @@ router.post(
     {
       successRedirect: "/home",
       failureRedirect: "/auth/signin",
-    //   failureFlash: 'Invalid Username or Password',
-    //   successFlash: 'You have logged in'
+      failureFlash: 'Invalid Username or Password',
+      successFlash: 'You have logged in'
     }
     )
 )
 
-router.get('/auth/changepass', (req, res) => {
+router.get('/auth/changepass', isLoggedIn, (req, res) => {
     res.render('auth/changePass')
 })
 
 router.post('/auth/changepass', isLoggedIn, (req, res) => {
     let hash = bcrypt.hashSync(req.body.password, 10);
     User.findByIdAndUpdate(req.user._id, {$set: {password: hash}}).then(() => {
-        res.redirect('/auth/logout')
+      req.logout()
+      req.flash('success', 'Password changed successfully')
+      res.redirect('/home')
     })
 })
 
 router.get('/auth/logout', isLoggedIn, (req, res) => {
     req.logout()
+    req.flash('success', 'Successfully logged out')
     res.redirect('/home')
 })
 
