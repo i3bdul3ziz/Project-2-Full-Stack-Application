@@ -1,7 +1,7 @@
 <section class="container">
         <div class="col-lg-6 py-5 py-lg-0 order-2 order-lg-1 aos-init aos-animate" data-aos="fade-right">
                 <h2 data-aos="fade-in"> Wlecome, <%= user.name %>  </h2>
-                <h2>We are team of talanted designers making websites with Bootstrap</h2>
+                <h2 class="section-des">You can add your precious antique here .. </h2>
                 <a href="/create" class="btn-add-item scrollto">Add Item</a>
          </div>
         </section>
@@ -15,7 +15,7 @@
                             <div class="card-body">
                             <h5 class="card-title">Item name: <%= item.name %></h5>
                             <p class="card-text">Description: <%= item.descrption %></p>
-                            <p class="card-text">Price: <%= item.price %></p>
+                            <p class="card-text">Price: <%= item.price %> SAR</p>
                             <p class="card-text"><%= moment(item.createdAt).fromNow() %></p>
                               <div class="row">
                                 <button type="submit"  class="get-edit-btn"><a href="/items/<%=item.id%>/edit"> Edit</a> </button>

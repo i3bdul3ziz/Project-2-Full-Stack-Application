@@ -1,7 +1,7 @@
 <section class="container">
         <div class="col-lg-6 py-5 py-lg-0 order-2 order-lg-1 aos-init aos-animate" data-aos="fade-right">
                 <h2 data-aos="fade-in"> Wlecome, <%= user.name %>  </h2>
-                <h2>Buyer page</h2>
+                <h2 class="section-des">Enjoy the experience of buying your favourite antique among these precious pieces ..</h2>
          </div>
         </section>
         <!-- list of Items created by Seller -->
@@ -9,15 +9,22 @@
         <div class="row mb-3">
             <% item.forEach(item => { %>
                 <div class="col-4">
-                    <div class="card" style="width: 18rem; margin-bottom:50px;">
+                    <div class="card" style="margin-bottom:50px;">
                             <img src="<%= item.image %>" class="card-img-top" alt="item image">
                             <div class="card-body">
                             <h5 class="card-title">Item name: <%= item.name %></h5>
                             <p class="card-text">Description: <%= item.descrption %></p>
-                            <p class="card-text">Price: <%= item.price %></p>
+                            <p class="card-text">Price: <%= item.price %> SAR</p>
                             <p class="card-text"><%= moment(item.createdAt).fromNow() %></p>
+                              <div class="row">
+                                    <button type="submit"  class="get-show-btn"><a href="/buyer/index/<%=item.id%>"> Show Details</a> </button>
+                              </div>
                             </div>
+<<<<<<< HEAD
                             <a href="/buyer/index/<%=item.id%>"><button type="submit"  class="get-edit-btn">Show Details</button></a>
+=======
+                           
+>>>>>>> d5e208420147a42f793a48ef19e5975cb0f4298c
                     </div>
                 </div> 
             <% }) %>
