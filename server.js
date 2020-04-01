@@ -2,11 +2,13 @@ require('dotenv').config()
 const express = require('express')
 const PORT = process.env.PORT
 const mongoose = require('mongoose')
+const moment = require("moment")
 const expressLayouts = require('express-ejs-layouts')
 const authRoutes = require('./routes/auth.routes')
 const itemRoutes = require('./routes/items.routes')
 const buyerRoutes = require('./routes/buyer.routes')
 const notRoutes = require('./routes/notification.routes')
+const Item = require('./models/items.model')
 const session = require("express-session")
 const flash = require('connect-flash')
 let passport = require("./helper/ppConfig")
@@ -62,9 +64,17 @@ app.use(itemRoutes)
 app.use(buyerRoutes)
 app.use(notRoutes)
 
-app.get("/home", (req, res) => {
-    res.render('home')
-})
+// app.get('/home', (req, res) => {
+//     if(!req.user){
+//         Item.find({}, (err, item) => {
+//             res.render('home', {item ,moment})
+//         })
+//     } else if(req.user.userType == "isBuyer") {
+//         res.redirect('/buyer/index')
+//     } else {
+//         res.redirect('/index')
+//     }
+// })
 
 app.get('*', (req, res) => {
     res.send('does not found')

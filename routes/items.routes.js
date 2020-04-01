@@ -21,6 +21,18 @@ var upload = multer({ storage: storage });
 
 router.use(methodOverride("_method"))
 
+router.get('/home', (req, res) => {
+  if(!req.user){
+      Item.find({}, (err, item) => {
+          res.render('home', {item ,moment})
+      })
+  } else if(req.user.userType == "isBuyer") {
+      res.redirect('/buyer/index')
+  } else {
+      res.redirect('/index')
+  }
+})
+
 // Item home page (index) route
 router.get('/index', isLoggedIn, (req, res) => {
   if(req.user.userType === "isSeller"){
@@ -127,7 +139,7 @@ router.put("/items/:id/edit", [isLoggedIn, upload.single("image")], (req, res) =
       updates.image = image;
     }
 
-    Item.findOneAndUpdate(req.params.id, {
+    Item.findByIdAndUpdate(req.params.id, {
       $set: updates
     }, {
       new: true

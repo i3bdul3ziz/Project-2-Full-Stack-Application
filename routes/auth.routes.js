@@ -15,11 +15,11 @@ router.get('/auth/signup', (req, res) => {
 
 router.post("/auth/signup", 
   [ 
-  check('name').isLength({min:8}),
-  check('Phone Number').isLength({min:10,max:10}),
-  check('city').isLength({min:4}),
+  check('name').isLength({min:4}),
+  check('phoneNumber').isLength({min:10,max:10}),
+  check('address.city').isLength({min:4}),
   // password must be at least 5 chars long
-  check('password').isLength({ min: 8 })
+  check('password').isLength({ min: 6 })
 ], 
 (req, res) => {
   // Finds the validation errors in this request and wraps them in an object with handy functions
@@ -40,7 +40,7 @@ router.post("/auth/signup",
         .save()
         .then(() => {
           passport.authenticate("local", {
-            successRedirect: "/auth/signin",
+            successRedirect: "/home",
             successFlash: 'Account created successfully!'
           })(req, res)
         })
@@ -74,7 +74,7 @@ router.post('/auth/changepass', isLoggedIn, (req, res) => {
     User.findByIdAndUpdate(req.user._id, {$set: {password: hash}}).then(() => {
       req.logout()
       req.flash('success', 'Password changed successfully')
-      res.redirect('/home')
+      res.redirect('/auth/signin')
     })
 })
 
