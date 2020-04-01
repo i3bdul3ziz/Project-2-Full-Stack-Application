@@ -6,9 +6,9 @@ const expressLayouts = require('express-ejs-layouts')
 const authRoutes = require('./routes/auth.routes')
 const itemRoutes = require('./routes/items.routes')
 const buyerRoutes = require('./routes/buyer.routes')
-const session = require("express-session");
-// const flash = require('connect-flash')
-let passport = require("./helper/ppConfig");
+const session = require("express-session")
+const flash = require('connect-flash')
+let passport = require("./helper/ppConfig")
 
 const app = express()
 
@@ -36,12 +36,15 @@ app.use(
       resave: false
       // cookie: { maxAge: 360000 } //duration of session
     })
-  );
+)
 
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(flash())
+
 
 app.use(function(req, res, next) {
+    res.locals.alerts = req.flash()
     res.locals.currentUser = req.user
     next()
 })

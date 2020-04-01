@@ -34,54 +34,58 @@ router.get('/index', isLoggedIn, (req, res) => {
         console.log(err)
     })
   } else {
+    req.flash('error', "You don't have th permission to access this page!")
     res.redirect('/home')
   }
 })
 
 //Create items route
 router.get("/create", isLoggedIn, (req, res) => {
-      if (req.user.userType === "isSeller") {
-        User.find().populate('user')
-        .then(user => {
-            res.render('items/create', {user})
-        })
-        .catch(err => {
-            console.log(err)
-        })
-      } else {
-        res.redirect('/home')
-      }
+  if (req.user.userType === "isSeller") {
+    User.find().populate('user')
+    .then(user => {
+      res.render('items/create', {user})
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  } else {
+      req.flash('error', "You don't have th permission to access this page!")
+      res.redirect('/home')
+  }
 })
 
 router.post('/create', [isLoggedIn, upload.single("image")], (req, res) => {
-    const file = req.file;
-    if (!file) {
-      const error = new Error("Please upload a file");
-      error.httpStatusCode = 400;
-      return next(error);
-    }
-    // all other code here
-        if (req.user.userType === "isSeller") {
-            let item = new Item(req.body)
-            item.image = "/images/" + file.filename;
-            item
-                .save()
-                .then(() => {
-                    User.findById(req.user, (err, user) => {
-                        user.items.push(item)
-                        user.save()
-                    })
-                    item.user.push(req.user)
-                    item.save()
-                    res.redirect('/index')
-                })
-                .catch( err => {
-                    console.log(err)
-                    res.send('Error!!!!!!')
-                })
-        } else {
-            res.redirect('/home')
-    }
+  const file = req.file;
+  if (!file) {
+  const error = new Error("Please upload a file");
+  error.httpStatusCode = 400;
+  return next(error);
+  }
+  // all other code here
+  if (req.user.userType === "isSeller") {
+    let item = new Item(req.body)
+    item.image = "/images/" + file.filename;
+    item
+      .save()
+      .then(() => {
+        User.findById(req.user, (err, user) => {
+          user.items.push(item)
+          user.save()
+        })
+        item.user.push(req.user)
+        item.save()
+        req.flash('success', 'You have created a new item successfully')
+        res.redirect('/index')
+      })
+      .catch( err => {
+        console.log(err)
+        return req.flash('error', 'Something went wrong please try again!')
+      })
+  } else {
+      req.flash('error', "You don't have th permission to access this page!")
+      res.redirect('/home')
+  }
 })
 
 //Create an edit route
@@ -94,36 +98,60 @@ router.get("/items/:id/edit", isLoggedIn,(req, res) => {
       });
     });
   }else {
+    req.flash('error', "You don't have th permission to access this page!")
     res.redirect('/home')
   }
 });
 
 //Create an PUT route
 router.put("/items/:id/edit", [isLoggedIn, upload.single("image")], (req, res) => {
-  // //   console.log(request.items.id);
-  const file = req.file;
-  if (!file) {
-    const error = new Error("Please upload a file");
-    error.httpStatusCode = 400;
-    return next(error);
-  }
   if(req.user.userType == "isSeller"){
-    Item.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, item) => {
-      console.log(item.image)
-      res.redirect('/index')
-    }) 
+    const body = req.body
+    const name = body.name
+    const descrption = body.descrption
+    const price = body.price
+    const file = req.file;
+    const updates = {
+      name,
+      descrption,
+      price
+    }
+  
+    if (file) {
+      const image = "/images/" + file.filename;
+      updates.image = image;
+    }
+
+    Item.findOneAndUpdate(req.params.id, {
+      $set: updates
+    }, {
+      new: true
+    }).then(item => {
+      req.flash('success', 'Edits submitted successfully');
+        res.redirect('/index');
+    })
+    .catch(err => {
+      console.log(err)
+      return req.flash('error', 'Unable to edit item');
+    })
   } else {
+    req.flash('error', "You don't have th permission to access this page!")
     res.redirect('/home')
   }
-});
+})
 
 // Delete route
 router.delete("/index/:id/delete", isLoggedIn,(req, res) => {
   if(req.user.userType == "isSeller"){
     Item.findByIdAndDelete(req.params.id).then(() => {
-      res.redirect("/index");
-    });
+      req.flash('success', "Item deleted successfully")
+      res.redirect("/index")
+    }).catch(err => {
+      console.log(err)
+      return req.flash('error', "Something went worng! can't delete this item")
+    })
   } else {
+    req.flash('error', "You don't have th permission to access this page!")
     res.redirect('/home')
   }
 })

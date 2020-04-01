@@ -33,7 +33,23 @@
                   </nav><!-- .nav-menu -->
                 </div>
               </header><!-- End Header -->
-
+              <div class="container">
+                <% if(alerts.success){ %>
+                  <% alerts.success.forEach(function(msg){ %>
+                   <div class="alert alert-success">
+                     <%= msg %>
+                   </div>
+                 <% }); %> 
+               <% } %>
+               
+               <% if(alerts.error){ %> 
+                 <%alerts.error.forEach(function(msg){ %>
+                   <div class="alert alert-danger">
+                     <%= msg %>
+                   </div>
+                 <% }); %>
+               <% } %>
+              </div>
     <%- body %>
 
     <!-- ======= Footer ======= -->
