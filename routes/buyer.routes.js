@@ -11,19 +11,16 @@ const methodOverride = require('method-override')
 router.use(methodOverride("_method"))
 
 // Item home page (index) route
-router.get('/home', (req, res) => {
-    if(!req.user){
-        Item.find({}, (err, item) => {
-            res.render('home', {item ,moment})
-        })
-    } else if(req.user.userType == "isBuyer") {
+router.get('/buyer/index', (req, res) => {
+    if(req.user.userType == "isBuyer") {
         User.find(req.user._id, (err, user) => {
             Item.find({}, (err, item) => {
                 res.render('buyer/index', {item , user: req.user, moment})
             })
         })
     } else {
-        res.redirect('/index')
+        req.flash('error', "You don't have th permission to access this page!")
+        res.redirect('/home')
     }
 })
 

@@ -15,18 +15,20 @@ router.get('/auth/signup', (req, res) => {
 
 router.post("/auth/signup", 
   [ 
-  check('name').isLength({min:8}),
-  check('Phone Number').isLength({min:10,max:10}),
-  check('city').isLength({min:4}),
+  check('name').isLength({min:2}),
+  check('phoneNumber').isLength({min:10,max:10}),
+  check('address.city').isLength({min:4}),
   // password must be at least 5 chars long
-  check('password').isLength({ min: 8 })
+  check('password').isLength({ min: 5 })
 ], 
 (req, res) => {
   // Finds the validation errors in this request and wraps them in an object with handy functions
+  //print error msg if the user enter invalid info
   const errors = validationResult(req);
+  console.log(errors);
   if (!errors.isEmpty()) {
-    // req.flash("error",errors.errors)
-    return res.redirect("/auth/signup")
+    req.flash("autherror", errors.errors);
+    return res.redirect("/auth/signup");
   }
       let user = new User(req.body)
       if (req.body.userType.value === "isBuyer") {
@@ -40,7 +42,7 @@ router.post("/auth/signup",
         .save()
         .then(() => {
           passport.authenticate("local", {
-            successRedirect: "/auth/signin",
+            successRedirect: "/home",
             successFlash: 'Account created successfully!'
           })(req, res)
         })
