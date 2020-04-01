@@ -5,6 +5,7 @@ const commentSchema = mongoose.Schema(
     {
         comment: {
             type:String,
+            required: true,
         },
         item: [{ 
             type: mongoose.Schema.Types.ObjectId,

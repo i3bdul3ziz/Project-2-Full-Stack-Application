@@ -2,6 +2,9 @@ const router = require('express').Router()
 const User = require('../models/user.model')
 const passport = require("../helper/ppConfig");
 const isLoggedIn = require('../helper/isLoggedin')
+const { check, validationResult } = require('express-validator');
+
+
 const bcrypt = require('bcrypt')
 // const { check, validationResult } = require('express-validator')
 
@@ -10,8 +13,21 @@ router.get('/auth/signup', (req, res) => {
     res.render('auth/signup', )
 })
 
-router.post("/auth/signup", (req, res) => {
-      //   console.log(req.body)
+router.post("/auth/signup", 
+  [ 
+  check('name').isLength({min:8}),
+  check('Phone Number').isLength({min:10,max:10}),
+  check('city').isLength({min:4}),
+  // password must be at least 5 chars long
+  check('password').isLength({ min: 8 })
+], 
+(req, res) => {
+  // Finds the validation errors in this request and wraps them in an object with handy functions
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    // req.flash("error",errors.errors)
+    return res.redirect("/auth/signup")
+  }
       let user = new User(req.body)
       if (req.body.userType.value === "isBuyer") {
         //if checked, req.body.userType is set to 'on'
@@ -23,7 +39,6 @@ router.post("/auth/signup", (req, res) => {
       user
         .save()
         .then(() => {
-
           passport.authenticate("local", {
             successRedirect: "/auth/signin",
             // successFlash: 'Account created and you have logged in!'
@@ -34,7 +49,6 @@ router.post("/auth/signup", (req, res) => {
           res.send("error!!!")
         })
 })
-
 router.get('/auth/signin', (req, res) => {
     res.render('auth/signin')
 })
