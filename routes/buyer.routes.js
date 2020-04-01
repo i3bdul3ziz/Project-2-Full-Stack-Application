@@ -30,7 +30,7 @@ router.get('/home', (req, res) => {
 //Create items route
 router.get("/buyer/index/:id", isLoggedIn, (req, res) => {
     if(req.user.userType == "isBuyer"){
-        Item.findById(req.params.id).populate('comments')
+        Item.findById(req.params.id).populate('comments user') 
         .then(item => {
             console.log(item)
             res.render('buyer/show', {item, moment})

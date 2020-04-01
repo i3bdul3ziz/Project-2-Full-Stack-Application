@@ -24,8 +24,13 @@ router.use(methodOverride("_method"))
 // Item home page (index) route
 router.get('/index', isLoggedIn, (req, res) => {
   if(req.user.userType === "isSeller"){
-    User.findById(req.user._id).populate('items')
-    .then(user => {
+    User.findById(req.user._id)
+//     .populate({path:"notification", model:"Notification", 
+//     populate: {path:'buyer', model:'User'}
+//   })
+  .populate('items')
+    .then(user => { 
+        console.log (user)
       let items = user.items
         res.render('items/index', {user, items, moment})
         

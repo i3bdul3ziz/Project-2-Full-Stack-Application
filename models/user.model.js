@@ -24,6 +24,10 @@ const userSchema = mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "Item"
         }],
+        notification:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Notification"
+        }],
         comments:[{
             type: mongoose.Schema.Types.ObjectId,
             ref: "Item"

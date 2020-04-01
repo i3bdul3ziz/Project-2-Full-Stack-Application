@@ -9,7 +9,10 @@
                         <p class="card-text">Price: <%= item.price %> SAR</p>
                         <p class="card-text"><%= moment(item.createdAt).fromNow() %></p>
                         </div>
-                        <form action="" method="POST">
+                        <form action="/buy" method="POST">
+                            <input name="item" value="<%= item._id %>" type="hidden">
+                            <input name="buyer" value="<%= currentUser._id %>" type="hidden">
+                            <input name="seller" value="<%= item.user[0]._id %>" type="hidden">
                             <button class="get-buy-btn" type="submit">Buy</button>
                         </form>
                         <br>

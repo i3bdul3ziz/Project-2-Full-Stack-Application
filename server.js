@@ -6,9 +6,11 @@ const expressLayouts = require('express-ejs-layouts')
 const authRoutes = require('./routes/auth.routes')
 const itemRoutes = require('./routes/items.routes')
 const buyerRoutes = require('./routes/buyer.routes')
+const notRoutes = require('./routes/notification.routes')
 const session = require("express-session")
 const flash = require('connect-flash')
 let passport = require("./helper/ppConfig")
+const MongoStore = require('connect-mongo')(session);
 
 const app = express()
 
@@ -33,7 +35,8 @@ app.use(
     session({
       secret: process.env.SECRET,
       saveUninitialized: true,
-      resave: false
+      resave: false,
+      store: new MongoStore({ url: process.env.MONGODB})
       // cookie: { maxAge: 360000 } //duration of session
     })
 )
@@ -41,6 +44,7 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
+
 
 
 app.use(function(req, res, next) {
@@ -52,6 +56,7 @@ app.use(function(req, res, next) {
 app.use(authRoutes)
 app.use(itemRoutes)
 app.use(buyerRoutes)
+app.use(notRoutes)
 
 app.get("/home", (req, res) => {
     res.render('home')
